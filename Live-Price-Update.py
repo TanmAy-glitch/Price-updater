@@ -5,8 +5,12 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pyppeteer import launch
 
-# Path to credentials JSON file in the repo
-CREDENTIALS_FILE = os.path.join(os.path.dirname(__file__), "scraper-69420-0c2fa11c82b0.json")
+# Read credentials from environment variable
+GOOGLE_CREDENTIALS = os.getenv("GOOGLE_CREDENTIALS")
+if not GOOGLE_CREDENTIALS:
+    raise ValueError("Missing GOOGLE_CREDENTIALS environment variable")
+
+creds_dict = json.loads(GOOGLE_CREDENTIALS)
 
 # Google Sheets Setup
 scope = [
@@ -14,7 +18,7 @@ scope = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
 client = gspread.authorize(creds)
 
 SHEET_NAME = "Live_Price_Spreadsheet"
