@@ -1,16 +1,26 @@
+import os
+import json
 import asyncio
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pyppeteer import launch
 
+# Load credentials from environment variable
+CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS_JSON")
+if not CREDENTIALS_JSON:
+    raise ValueError("GOOGLE_CREDENTIALS_JSON environment variable is missing!")
+
+creds_dict = json.loads(CREDENTIALS_JSON)
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive"
+]
+creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+client = gspread.authorize(creds)
+
 # Google Sheets Setup
 SHEET_NAME = "Live_Price_Spreadsheet"
-CREDENTIALS_FILE = "/content/scraper-69420-0c2fa11c82b0.json"  # Replace with your credentials JSON file
-
-# Authenticate and open Google Sheets
-scope = ["https://spreadsheets.google.com/feeds", "https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"]
-creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
-client = gspread.authorize(creds)
 sheet = client.open(SHEET_NAME).sheet1  # Use the first sheet
 
 async def scrape_price(url, row_number, expected_variant):
@@ -87,15 +97,18 @@ async def scrape_price(url, row_number, expected_variant):
     print(f"Updated row {row_number} successfully.")  # Debug print
 
 async def main():
-    start_row = int(input("Enter the starting row number: "))  # Prompt user for row input
     data = sheet.get_all_values()  # Read all rows
+    start_row = 2  # Always start from row 2
 
-    for i, row in enumerate(data[start_row - 1:], start=start_row):  # Start from the user-specified row
+    for i, row in enumerate(data[start_row - 1:], start=start_row):  # Skip header, start from row 2
+        if len(row) < 3 or not row[0] or not row[2]:  # Check if row has enough columns & required data
+            print(f"Skipping row {i}: Missing URL or Variant")
+            continue
+
         url = row[0]  # Column A (URLs)
         variant = row[2]  # Column C (Variant Type)
 
-        if url and variant:
-            await scrape_price(url, i, variant)
+        await scrape_price(url, i, variant)
 
 import nest_asyncio
 nest_asyncio.apply()
