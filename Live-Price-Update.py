@@ -43,18 +43,18 @@ async def scrape_price(url, row_number, expected_variant):
         try:
             # Select variant name dynamically
             variant_selector = f"#allStores > div > div:nth-child({variant_index}) > div.d-flex.j-c.w-100.prdt_vrnt > div.vrnt_txt.txt-heading.txt-w-b.pos-rel.pos-after.lst_sprite"
-            variant_name = await page.querySelectorEval(variant_selector, "(el) => el.innerText.strip()")
+            variant_name = await page.querySelectorEval(variant_selector, "(el) => el.innerText.trim()")
             variant_found = True
         except:
             break  # No more variants or no variant exists
 
         # Extract store names
         store_elements = await page.querySelectorAll(f"#allStores > div > div:nth-child({variant_index}) div.store-logo")
-        stores = [await page.evaluate('(el) => el.innerText.strip()', store) for store in store_elements]
+        stores = [await page.evaluate('(el) => el.innerText.trim()', store) for store in store_elements]
 
         # Extract prices
         price_elements = await page.querySelectorAll(f"#allStores > div > div:nth-child({variant_index}) div.store-price.txt-w-b")
-        prices = [await page.evaluate('(el) => el.innerText.strip()', price) for price in price_elements]
+        prices = [await page.evaluate('(el) => el.innerText.trim()', price) for price in price_elements]
 
         # Ensure stores & prices are aligned
         min_length = min(len(stores), len(prices))
@@ -71,10 +71,10 @@ async def scrape_price(url, row_number, expected_variant):
     # If no variant structure exists, extract prices from the default listing
     if not variant_found:
         store_elements = await page.querySelectorAll("#allStores div.store-logo")
-        stores = [await page.evaluate('(el) => el.innerText.strip()', store) for store in store_elements]
+        stores = [await page.evaluate('(el) => el.innerText.trim()', store) for store in store_elements]
 
         price_elements = await page.querySelectorAll("#allStores div.store-price.txt-w-b")
-        prices = [await page.evaluate('(el) => el.innerText.strip()', price) for price in price_elements]
+        prices = [await page.evaluate('(el) => el.innerText.trim()', price) for price in price_elements]
 
         min_length = min(len(stores), len(prices))
         store_prices = dict(zip(stores[:min_length], prices[:min_length]))
