@@ -1,0 +1,5 @@
+asyncio
+gspread
+oauth2client
+pyppeteer
+nest_asyncio
