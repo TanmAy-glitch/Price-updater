@@ -5,21 +5,18 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pyppeteer import launch
 
-# Load credentials from environment variable
-CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS")
-if not CREDENTIALS_JSON:
-    raise ValueError("GOOGLE_CREDENTIALS_JSON environment variable is missing!")
+# Path to credentials JSON file in the repo
+CREDENTIALS_FILE = os.path.join(os.path.dirname(__file__), "scraper-69420-0c2fa11c82b0.json")
 
-creds_dict = json.loads(CREDENTIALS_JSON)
+# Google Sheets Setup
 scope = [
     "https://spreadsheets.google.com/feeds",
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"
 ]
-creds = ServiceAccountCredentials.from_json_keyfile_dict(creds_dict, scope)
+creds = ServiceAccountCredentials.from_json_keyfile_name(CREDENTIALS_FILE, scope)
 client = gspread.authorize(creds)
 
-# Google Sheets Setup
 SHEET_NAME = "Live_Price_Spreadsheet"
 sheet = client.open(SHEET_NAME).sheet1  # Use the first sheet
 
@@ -46,18 +43,18 @@ async def scrape_price(url, row_number, expected_variant):
         try:
             # Select variant name dynamically
             variant_selector = f"#allStores > div > div:nth-child({variant_index}) > div.d-flex.j-c.w-100.prdt_vrnt > div.vrnt_txt.txt-heading.txt-w-b.pos-rel.pos-after.lst_sprite"
-            variant_name = await page.querySelectorEval(variant_selector, "(el) => el.innerText.trim()")
+            variant_name = await page.querySelectorEval(variant_selector, "(el) => el.innerText.strip()")
             variant_found = True
         except:
             break  # No more variants or no variant exists
 
         # Extract store names
         store_elements = await page.querySelectorAll(f"#allStores > div > div:nth-child({variant_index}) div.store-logo")
-        stores = [await page.evaluate('(el) => el.innerText.trim()', store) for store in store_elements]
+        stores = [await page.evaluate('(el) => el.innerText.strip()', store) for store in store_elements]
 
         # Extract prices
         price_elements = await page.querySelectorAll(f"#allStores > div > div:nth-child({variant_index}) div.store-price.txt-w-b")
-        prices = [await page.evaluate('(el) => el.innerText.trim()', price) for price in price_elements]
+        prices = [await page.evaluate('(el) => el.innerText.strip()', price) for price in price_elements]
 
         # Ensure stores & prices are aligned
         min_length = min(len(stores), len(prices))
@@ -74,10 +71,10 @@ async def scrape_price(url, row_number, expected_variant):
     # If no variant structure exists, extract prices from the default listing
     if not variant_found:
         store_elements = await page.querySelectorAll("#allStores div.store-logo")
-        stores = [await page.evaluate('(el) => el.innerText.trim()', store) for store in store_elements]
+        stores = [await page.evaluate('(el) => el.innerText.strip()', store) for store in store_elements]
 
         price_elements = await page.querySelectorAll("#allStores div.store-price.txt-w-b")
-        prices = [await page.evaluate('(el) => el.innerText.trim()', price) for price in price_elements]
+        prices = [await page.evaluate('(el) => el.innerText.strip()', price) for price in price_elements]
 
         min_length = min(len(stores), len(prices))
         store_prices = dict(zip(stores[:min_length], prices[:min_length]))
@@ -112,6 +109,4 @@ async def main():
 
 import nest_asyncio
 nest_asyncio.apply()
-
-import asyncio
-asyncio.run(main())  # <-- Corrected async function call
+asyncio.run(main())  # Proper way to call async function
