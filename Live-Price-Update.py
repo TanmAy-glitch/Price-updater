@@ -5,12 +5,48 @@ import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 from pyppeteer import launch
 
-# Read credentials from environment variable
-GOOGLE_CREDENTIALS = os.getenv("API_KEY")
-if not GOOGLE_CREDENTIALS:
-    raise ValueError("Missing API_KEY environment variable")
+# Hardcoded Google Credentials (Not Recommended)
+creds_dict = {
+    "type": "service_account",
+    "project_id": "scraper-69420",
+    "private_key_id": "ef274378ee4925034c3c2e051df222870af2edb5",
+    "private_key": """-----BEGIN PRIVATE KEY-----
+MIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDp7M3A3h36Jafl
+msp2aO+IY0nGYeWdCPwzfSmr5LPHDuGquiiO+U37ifmAdChKpquFfC9BVJZBMs9z
+UmOPkdNELLzk+yehFvpXiJYlpGcKiQoP6WYumkmCqXCeEbDDoED0iAVGDDy3smyu
+iQuwtaydatHa/iw52sirSjYWIrrLXtaBFjurOH46ac+SmhfA+66lpjl8Adafm+ND
+QYA28Tgn5CDK4+JA3ubsABG8oh4WnkFEdBzWreDjm+9EBXdVAOlueelD3QaFUefE
+/t/2T2MwR/+MqIaONSNTI5YMITo7PEyxLAf0M2jeble8ykiSf8kaQq6PzBmwdbM+
+mI2c3wxDAgMBAAECggEAKMG4BZsNmQhXjPMfxGq7FUXLVFO5OFeY7XWovYjO4+dN
+XTwrFeIM+r8K6B0U6hDJAKxm5ViSB1ENgPfBXgHXz+CFltXFjVUeEAM9udg/lb/T
+r3sIcSUzmp7f/sJxTFxPBOvwE0jNiWn+cphxH3w/03uJjcDMPtZGMUXwT4IEjqsl
+k4wh73tinBGqHtI8xJl7lEYtfuXNjIbFDRT50I3Q1d/O4YxcwEwpZVrlIg7ypY2C
+BJp2Hd5+gUajAhfO5CrXTEBwKxqbyUeIOJfWkcbLPk6KrTbAKvUC2fzmtKFR4K0y
+PBUlo0Eeqzg0AlLO97rlxF8E2F0eWOxRBNL7CqmyoQKBgQD/41RdEB90xS5y1qNh
+9mbumr35OhJGJKLEQbeMBTXnIqiQpEJ7yhCaJ0Ysz+XGctbFPVYplka+26zlONAL
+l2ogSrgBjYwT1aDiX+/nlyu4or/7met+tDFiegR3hl50bI15iJ667Mx+6JfOr33S
+g9AAxRnvkDK1H4ndpTZEkbX14wKBgQDqBwNs4QpOG7cAwetaPnDUZ7sAe515wwMK
+RWREwk12T7r1J7ZeAhzr7+lKNQEFSr81wwR3GEH/V3E2k1K5TWJV4KwXraUO5JKT
+NUfYcX4yXpbS9I5YHBToocuOc9MPeo/0by1Fqo5XPOC+EBgSJJJEWkxPaB70LMea
+9+T5HSteIQKBgFgTyZAW4pzw2iIRGz+27osmnElS4cNfDN98t07s5DbgySCwSWoO
+jVRiPFdkX/TExoQxrpy16zf6qTJlMccroQ3oahmuvQ5+s9f3qb4PXK865dYWjuaX
+43+//BWgHJb6Xl/81JYGuATezpIH+ckiMdByB5FcEvghGPU/zsQfW4B9AoGAJFsE
+kDSBilLJ4ic97Z4HnyeiKFgLxa+i2EShaAEbUYbfT1hk/0OqxIhXoHyNdQoAnFR4
+bBvrnMQzxTurvTelUBwAAAmsu5yMnKvJRnmTFjYVjh4JwuxR3zXLToz1u9DZbiqb
+SNhPFoRRkZUkeCUQR+gTNL7DGEGgnJVoD78VTqECgYACL9lx0tXPPziNOAqTJqnt
+EkgAd9LoyE1KFA9il+ehKAQy3wPKuPaZrAQlxQZrzNiBmXu4ZqZJCofC6PPXqvAl
+oXduN5BvF8ssZCmVyZ4zXD081g03mH1evHX6Rkkgkd+RvCD6Jokvy2Otx4Q/55ow
+tykooNrOtQQ8ghzyf9nDfg==
+-----END PRIVATE KEY-----""",
+    "client_email": "yummyprices@scraper-69420.iam.gserviceaccount.com",
+    "client_id": "108347187983876489527",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/yummyprices%40scraper-69420.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}
 
-creds_dict = json.loads(GOOGLE_CREDENTIALS)
 
 # Google Sheets Setup
 scope = [
