@@ -6,7 +6,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from pyppeteer import launch
 
 # Load credentials from environment variable
-CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS_JSON")
+CREDENTIALS_JSON = os.getenv("GOOGLE_CREDENTIALS")
 if not CREDENTIALS_JSON:
     raise ValueError("GOOGLE_CREDENTIALS_JSON environment variable is missing!")
 
