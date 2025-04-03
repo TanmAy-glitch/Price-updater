@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "scraper-69420",
+  "private_key_id": "0c2fa11c82b028eaf961d86b4d1836b9a5396626",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDKhmY2ixZrekxb\nIJL8hIdHF87YfRz1u3h5unAXLS36PypimpOsYWz0hrfzLv7wWl+pDTwZZUTEi0mA\nQ7JIMT3IeTE/4bPRY1ASGONL8eCL3x5Z5OSDAGWDJdf8ymOrrRGvNrDy78YKOxEO\n5Nb02b33wJLyPHIOUGd3qW1nTbNmO4iL4fyUiMpwpsTZD+S2GCfn73NZfiQjXHL8\nQcHHdALDHPYT6keC27LV7bJvavr6an+EWqGQMDwC2pBaD0OO61vwSSgMBU77WrEY\nDMBR1TR2nRfhOnpqklL/AfMqOZvJ3ZPKwWBFv3wU21GnbzrEHYHOLlfyGg8F2hoL\n2zh01KIXAgMBAAECggEACpdrlW/bgbSiqHCURbdONjsAUU5+iwdj4V6m6aXH1GEk\n5h7WMqfhtKQUm+SZ5pec9Lb0rRG6JME+dc767hwAWPfYyh6tDC1MDOlwsavgcpz9\n9fUquJzDsk+MJsDhSrz0jzVzNmR9w4YCE8WGzF7uBWmOOQCAqOj7Kd6z3wXJDqnE\nfqV8yhsxp+e93s8eWF/xRA5spxwaJCW1yxoQ9ctG6G8w/SOQjLrUOdt5PTW3BwOa\n7LE5fJK1sZ/fdc/M66m2epqzmV8pZbKRl/wKFx96HHU+qLWmsd0y9rypA6FiUQnI\n+kP1+pv6vP8FU5jJzEs5WLefDTrdMFqTEAy/IWRoKQKBgQD2kb3qVDUJYTsxszFB\n6EBxKHJmer5o6Nx08XnhCpkb62oYtV1dJ8pIwaxvHqHV2elz5fJJj1hIs3+j4QLX\nKpLzRvT358yOT1vD7H2DMNpmTfUupLrOCWoH8W90/dMhFv+RAN3ADhzmkCEyF2zK\ndniDfE1c3NRvDrez2mGWRik5NQKBgQDSRWbu3NLO8hD9bHRh3BZc1WlO9nHWqq8N\niEoAgdxEuOsIEY+sJSB9lQ/HltXife04HPRz9AqlgCWHBQRkPuwMvIqIqUQuzvvy\nZu/1prYGtKW01fAo0rKL3FkprMQ0/omq08xGFL30h1v42xEMgibGi0omU3eMNyX3\n3v/TtTHjmwKBgEHrStvH8Xn1fa7W2ldlcT0PdC5DqH5Bqxa0rEHm5HIbaPz8F97c\n0W7MIH6AsQGMRaaPlkvmP9MH8hrtACZoImtZ0Aoq9XwiaUUjB5c4S1tIgkEbFzoY\nODmxaXvclEJndKHemmpLG5zkcYuDybkDHUsBw2kNPNoIFELIIojbbw/1AoGBAMmD\nF5V87U7Er8GfKZ4LRScsoyK4jfqTUvYeEgWQbl8x9JSj99ObNRsFOr0lcc8ArdGj\n9iYV0Aox2EUgasgDgUbnfcBgr2ZImS4Ctp7uaO3ePBwlF2aYHeJphs2os9Sxx49+\nMPtMr4rkGiFRGHKrXKvUG3jFbwFibLGy9euXb7tXAoGAScbf+wHTYBCTlH3lmPMN\nRAngB+AVyn7xkCuRYofkmb71jl3e/soft9RRcD/7ugfkhV07eoEhFcv1aybfzcVI\nEdt2TuqSmL6hHrpJohSPk2R1xJsXUd8hC4Vv0cigZsHcbZckcEBY+4QpnGh7Ij3H\nZdS41+IGdRgprunBJn45wus=\n-----END PRIVATE KEY-----\n",
+  "client_email": "yummyprices@scraper-69420.iam.gserviceaccount.com",
+  "client_id": "108347187983876489527",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/yummyprices%40scraper-69420.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
